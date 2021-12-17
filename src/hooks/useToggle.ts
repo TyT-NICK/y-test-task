@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-const useToggle = (initialValue: boolean = false) => {
+const useToggle = (initialValue: boolean = false): [boolean, VoidFunction] => {
   const [toggled, setToggled] = useState(initialValue)
 
   const toggle = useCallback(() => setToggled((prev) => !prev), [])
