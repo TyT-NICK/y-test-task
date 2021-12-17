@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import './assets/styles/App.scss'
+import 'src/assets/styles/App.scss'
+import { Router } from './router'
 
 const App: FC = () => {
-  console.log(process.env.REACT_APP_API_URL)
-  return <div className="App"></div>
+  return <Router />
 }
 
 export default App
