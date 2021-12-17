@@ -1,3 +1,5 @@
+@import './mixins';
+
 *,
 *:before,
 *:after {
@@ -29,7 +31,5 @@ li {
 #root {
   min-height: 100vh;
   overflow: auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  @include flex(column, start, stretch);
 }
