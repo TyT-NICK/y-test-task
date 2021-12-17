@@ -1,19 +1,16 @@
-import { FC } from 'react'
-import { Header } from '../../components'
-import { ReactComponent as Filter } from 'src/assets/imgs/filter.svg'
-import { ReactComponent as FilterActive } from 'src/assets/imgs/filter-active.svg'
-import { useToggle } from '../../hooks'
-import classes from './Jogs.module.scss'
+import { FC, useCallback } from 'react'
+import { Header, ToggleFilterButton } from 'src/components'
+import { useToggle } from 'src/hooks'
 
 const Jogs: FC = () => {
   const [filtersShown, toggleFiltersShown] = useToggle(false)
 
+  const handleFiltersToggle = useCallback(() => toggleFiltersShown(), [toggleFiltersShown])
+
   return (
     <>
       <Header>
-        <button className={classes.filterButton} onClick={() => toggleFiltersShown()}>
-          {filtersShown ? <FilterActive /> : <Filter />}
-        </button>
+        <ToggleFilterButton isActive={filtersShown} toggle={handleFiltersToggle} />
       </Header>
     </>
   )
