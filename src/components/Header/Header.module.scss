@@ -1,0 +1,147 @@
+@import 'src/assets/styles/screenBreakponts';
+@import 'src/assets/styles/mixins';
+
+.header {
+  @include flex(row, space-between, center);
+
+  --header-height: 77px;
+  background: var(--col-apple-green);
+  height: var(--header-height);
+  align-self: stretch;
+  width: 100%;
+  padding: 0 25px;
+
+  &.inverted {
+    background: var(--col-white-two);
+
+    .logo path {
+      fill: var(--col-apple-green);
+    }
+
+    .menuButton path {
+      fill: var(--col-greyish);
+    }
+  }
+}
+
+.logo {
+  width: 98px;
+}
+
+.menuButton {
+  width: 28px;
+  margin-left: 39px;
+
+  svg {
+    width: 100%;
+  }
+
+  path {
+    fill: var(--col-white-two);
+  }
+}
+
+.nav {
+  display: none;
+  position: fixed;
+  height: calc(100% - var(--header-height));
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding-top: 110px;
+
+  &.shown {
+    display: block;
+  }
+
+  li {
+    text-align: center;
+  }
+
+  li + li {
+    margin-top: 25px;
+  }
+
+  a {
+    margin: 0 auto;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    &:hover {
+      color: var(--col-greyish);
+    }
+
+    &.active {
+      color: var(--col-apple-green);
+    }
+  }
+}
+
+.children {
+  margin-left: auto;
+}
+
+@media screen and (min-width: $screen-small) {
+  .header {
+    --header-height: 116px;
+    padding: 0 37px;
+  }
+
+  .logo {
+    width: 147px;
+  }
+
+  .menuButton {
+    display: none;
+  }
+
+  .children {
+    order: 1;
+    margin-left: 46px;
+  }
+
+  .nav {
+    li + li {
+      margin-top: 0;
+      margin-left: 46px;
+    }
+
+    li:first-child {
+      margin-left: auto;
+    }
+
+    &,
+    ul {
+      display: contents;
+      list-style: none;
+    }
+
+    a {
+      font-size: 14px;
+      color: var(--col-white-two);
+      position: relative;
+      padding: 7px 0;
+
+      &::after {
+        content: '';
+        position: absolute;
+        background: var(--col-white-two);
+        height: 2px;
+        width: 0;
+        bottom: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: width var(--transition-base);
+      }
+
+      &:hover {
+        color: var(--col-white-two);
+
+        &:after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
