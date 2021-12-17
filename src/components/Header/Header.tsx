@@ -6,6 +6,7 @@ import { ReactComponent as Burger } from 'src/assets/imgs/burger.svg'
 import { useToggle } from 'src/hooks'
 import classNames from 'classnames'
 import NavList from './NavList'
+import { Path } from 'src/router'
 
 export type HeaderLink = {
   title: string
@@ -13,9 +14,9 @@ export type HeaderLink = {
 }
 
 const navLinks: HeaderLink[] = [
-  { title: 'jogs', to: '/jogs' },
-  { title: 'info', to: '/info' },
-  { title: 'contact us', to: '/contacts' },
+  { title: 'jogs', to: Path.jogs },
+  { title: 'info', to: Path.info },
+  { title: 'contact us', to: Path.contact },
 ]
 
 const Header: FC = ({ children }) => {

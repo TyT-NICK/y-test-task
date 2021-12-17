@@ -73,7 +73,7 @@
       color: var(--col-greyish);
     }
 
-    &.active {
+    &[class='active'] {
       color: var(--col-apple-green);
     }
   }
@@ -138,7 +138,8 @@
         transition: width var(--transition-base);
       }
 
-      &:hover {
+      &:hover,
+      &[class='active'] {
         color: var(--col-white-two);
 
         &:after {

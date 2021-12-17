@@ -1,5 +1,6 @@
 import { HeaderLink } from './Header'
 import { FC } from 'react'
+import { NavLink } from 'react-router-dom'
 
 type NavListProps = {
   items: HeaderLink[]
@@ -11,7 +12,7 @@ const NavList: FC<NavListProps> = ({ items, className = '' }) => (
     <ul>
       {items.map((link) => (
         <li key={link.to}>
-          <a href={link.to}>{link.title}</a>
+          <NavLink to={link.to}>{link.title}</NavLink>
         </li>
       ))}
     </ul>
