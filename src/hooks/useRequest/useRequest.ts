@@ -2,7 +2,7 @@ import { auth } from 'src/utils'
 import { useCallback, useState } from 'react'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import apiUrl, { Url } from 'src/constants/api'
-import { RQ, RS, Method, RequestParams } from './types'
+import { Method, RequestParams, RQ, RS } from './types'
 
 const HTTPAgent = axios.create({
   baseURL: apiUrl,
@@ -70,4 +70,10 @@ const useRequest = <RQ, RS>({
   return [request, pending]
 }
 
-export const useLoginRequest = () => useRequest<RQ.UuidLogin, RS.UuidLogin>({ url: Url.UuidLogin, method: Method.Post })
+export const useLoginRequest = () =>
+  useRequest<RQ.UuidLogin, RS.UuidLogin>({
+    url: Url.UuidLogin,
+    method: Method.Post,
+  })
+
+export const useDataSync = () => useRequest<RQ.DataSync, RS.DataSync>({ url: Url.DataSync, isAuthNeeded: true })
