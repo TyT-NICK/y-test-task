@@ -1,0 +1,36 @@
+.button {
+  --color: var(--col-sup-green);
+  --height: 60px;
+  --hover-color: var(--col-sup-green);
+
+  background: none;
+  border: solid 3px var(--color);
+  color: var(--color);
+  height: var(--height);
+  border-radius: calc(var(--height) / 2);
+  padding: 0 calc(var(--height) / 2);
+  font-size: 18px;
+  font-weight: bold;
+
+  &:hover:not(:disabled) {
+    background: var(--color);
+    color: var(--hover-color);
+
+    path {
+      fill: var(--hover-color);
+    }
+  }
+
+  &:disabled {
+    --color: var(--col-greyish) !important;
+    cursor: default;
+  }
+
+  &.white {
+    --color: var(--col-white-two);
+  }
+
+  &.purple {
+    --color: var(--col-baby-purple);
+  }
+}
