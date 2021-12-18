@@ -41,7 +41,7 @@ const useRequest = <RQ, RS>({
           }
         : {}
 
-      let response: AxiosResponse<RS>
+      let response: AxiosResponse<{ response: RS }>
       try {
         switch (method) {
           case Method.Get:
@@ -61,7 +61,10 @@ const useRequest = <RQ, RS>({
         setPending(false)
       }
 
-      const { data } = response
+      const {
+        data: { response: data },
+      } = response
+
       return data
     },
     [isAuthNeeded, method, url]

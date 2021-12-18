@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { auth } from 'src/utils'
 import { useLoginRequest } from './useRequest'
 
-const useLogin = () => {
+const useLogin = (): [(token?: string) => void, boolean] => {
   const [requestLogin, pending] = useLoginRequest()
 
   const login = useCallback(

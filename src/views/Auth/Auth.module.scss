@@ -1,0 +1,45 @@
+@import 'src/assets/styles/screenBreakponts';
+
+.bearFace {
+  display: block;
+  margin: 141px auto 103px;
+
+  path {
+    fill: var(--col-baby-purple);
+  }
+}
+
+.loginButton {
+  margin: 0 auto;
+  display: block;
+  --hover-color: var(--col-white-two);
+}
+
+.card {
+  display: contents;
+  border-radius: 44px;
+  width: 503px;
+  background: var(--col-baby-purple);
+  margin: 207px auto 0;
+  padding: 77px 0 36px;
+}
+
+@media screen and (min-width: $screen-small) {
+  .bearFace {
+    margin-top: 0;
+    margin-bottom: 56px;
+
+    path {
+      fill: var(--col-white-two);
+    }
+  }
+
+  .card {
+    display: block;
+
+    .loginButton {
+      --color: var(--col-white-two);
+      --hover-color: var(--col-baby-purple);
+    }
+  }
+}
