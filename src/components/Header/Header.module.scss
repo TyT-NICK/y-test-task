@@ -83,6 +83,14 @@
   margin-left: auto;
 }
 
+.authOnly {
+  display: contents;
+
+  &.hidden {
+    display: none;
+  }
+}
+
 @media screen and (min-width: $screen-small) {
   .header {
     --header-height: 116px;
