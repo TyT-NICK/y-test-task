@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
-import { Color } from '../../constants'
+import { Color } from 'src/constants'
 import classNames from 'classnames'
 import classes from './Button.module.scss'
 
