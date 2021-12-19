@@ -1,8 +1,9 @@
 import { useCallback } from 'react'
 
-import { auth } from 'src/utils'
+import { auth, renameKeys } from 'src/utils'
 import { useLoginRequest } from './useRequest'
 import { useLoginDispatch, useLogoutDispatch } from './useDispatch'
+import { UuidLogin } from 'src/constants/types'
 
 type Auth = {
   login: (token?: string | null) => void
@@ -24,10 +25,10 @@ const useAuth = (): Auth => {
 
       requestLogin({ uuid: 'hello' })
         .then((response) => {
-          const { access_token } = response
+          const { accessToken } = renameKeys<UuidLogin>(response)
 
-          auth.setToken(access_token)
-          dispatchLogin(access_token)
+          auth.setToken(accessToken)
+          dispatchLogin(accessToken)
         })
         .catch((e) => console.error(e))
     },
