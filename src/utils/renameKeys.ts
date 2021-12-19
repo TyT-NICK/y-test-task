@@ -6,5 +6,5 @@ export const renameKeys = <T>(obj: object): T => {
   }, {}) as T
 }
 
-export const renameKeysInArray = <T extends Array<object>>(array: object[]): Array<T> =>
-  array.map((elem) => renameKeys(elem))
+export const renameKeysInArray = <T extends Array<object>>(array: object[]): T =>
+  array.map((elem) => renameKeys(elem)) as T

@@ -79,4 +79,4 @@ export const useLoginRequest = () =>
     method: Method.Post,
   })
 
-export const useDataSync = () => useRequest<RQ.DataSync, RS.DataSync>({ url: Url.DataSync, isAuthNeeded: true })
+export const useDataSyncRequest = () => useRequest<RQ.DataSync, RS.DataSync>({ url: Url.DataSync, isAuthNeeded: true })

@@ -1,0 +1,33 @@
+@import 'src/assets/styles/screenBreakponts';
+
+.emptyList {
+  &Icon {
+    display: block;
+    margin: 217px auto 30px;
+  }
+
+  &Text {
+    text-align: center;
+    color: var(--col-greyish);
+    font-size: 24px;
+    margin-bottom: 145px;
+  }
+
+  &AddButton {
+    margin: 0 auto;
+    display: block;
+    --hover-color: var(--col-white-two);
+  }
+}
+
+@media screen and (min-width: $screen-small) {
+  .emptyList {
+    &Icon {
+      margin: 240px auto 47px;
+    }
+
+    &Text {
+      margin-bottom: 141px;
+    }
+  }
+}

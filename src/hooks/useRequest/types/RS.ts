@@ -3,9 +3,11 @@ export type UuidLogin = {
 }
 
 export type DataSync = {
-  id: number
-  user_id: string
-  distance: number
-  time: number
-  date: number
+  jogs: Array<{
+    id: number
+    user_id: string
+    distance: number
+    time: number
+    date: number
+  }>
 }
