@@ -50,7 +50,8 @@
   left: 0;
   padding-top: 110px;
   background: var(--col-white-two);
-
+  z-index: 999;
+  
   &.shown {
     display: block;
   }
