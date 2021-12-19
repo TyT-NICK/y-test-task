@@ -1,0 +1,52 @@
+.textField {
+  display: inline-block;
+
+  &.multiline {
+  }
+
+  &.focused {
+    .inputWrapper {
+      --col-outline: var(--col-grey-3);
+    }
+  }
+
+  &.invalid {
+    .inputWrapper {
+      --col-outline: var(--col-input-error-border);
+      background: var(--col-input-error-bg);
+    }
+  }
+
+  .label {
+    display: block;
+    font-size: 16px;
+    line-height: 23px;
+    margin-bottom: 7px;
+  }
+
+  .requiredMark {
+    color: red;
+  }
+
+  .input {
+    border: none;
+    align-self: stretch;
+    padding: 10px;
+    font-size: 14px;
+    background: none;
+    flex: 1 1 auto;
+    resize: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.inputWrapper {
+  --col-outline: var(--col-grey-4);
+  box-shadow: 0 0 0 1px var(--col-outline);
+  display: flex;
+  align-items: flex-end;
+  min-height: 45px;
+}
