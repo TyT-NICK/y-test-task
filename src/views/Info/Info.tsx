@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import { Header } from 'src/components'
 import pageClasses from '../Page.module.scss'
+import RequireAuth from 'src/router/ReqireAuth'
 
 const Info: FC = () => {
   return (
-    <>
+    <RequireAuth>
       <Header />
       <main className={pageClasses.main}>
         <h1 className={pageClasses.h1}>Info</h1>
@@ -22,7 +23,7 @@ const Info: FC = () => {
           opposed to using 'Content here, content here', making it look like readable English.
         </p>
       </main>
-    </>
+    </RequireAuth>
   )
 }
 

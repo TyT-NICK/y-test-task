@@ -1,23 +1,26 @@
 import { FC, useCallback } from 'react'
-import useLogin from 'src/hooks/useLogin'
+import useAuth from 'src/hooks/useAuth'
 import { Button, Header } from 'src/components'
 import pageClasses from '../Page.module.scss'
 import classes from './Auth.module.scss'
 import { ReactComponent as BearFace } from 'src/assets/imgs/bear-face.svg'
 import { Color } from 'src/constants'
 import classNames from 'classnames'
-import { hasToken } from 'src/utils/auth'
 import { Navigate } from 'react-router-dom'
 import { Path } from 'src/router'
+import { useAppSelector } from 'src/hooks'
 
 const Auth: FC = () => {
-  const [login, pendingLogin] = useLogin()
+  const { login, pending: pendingLogin } = useAuth()
+  const { token } = useAppSelector((state) => state.auth)
 
   const mainClasses = classNames(pageClasses.main)
 
-  const handleLoginClick = useCallback(() => login(), [login])
+  const handleLoginClick = useCallback(() => {
+    login()
+  }, [login])
 
-  if (hasToken()) return <Navigate to={Path.jogs} />
+  if (token) return <Navigate to={Path.jogs} />
 
   return (
     <>
