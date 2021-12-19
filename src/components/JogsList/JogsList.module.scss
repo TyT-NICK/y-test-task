@@ -1,4 +1,5 @@
 @import 'src/assets/styles/screenBreakponts';
+@import 'src/assets/styles/mixins';
 
 .emptyList {
   &Icon {
@@ -20,6 +21,48 @@
   }
 }
 
+.jogList {
+  &Item {
+    @include flex(row, flex-end, stretch);
+    height: 187px;
+    margin: 0 auto;
+    padding: 48px 66px;
+    position: relative;
+
+    * {
+      font-size: 14px;
+    }
+
+    svg {
+      flex: 0 0 87px;
+      margin-right: 46px;
+    }
+
+    & > *:not(:first-child) {
+      flex: 0 0 50%;
+      @include flex(column, space-between, stretch);
+    }
+
+    .key {
+      font-weight: bold;
+    }
+
+    .value {
+      color: var(--col-greyish);
+    }
+
+    &:after {
+      content: '';
+      background: var(--col-white-three);
+      height: 2px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}
+
 @media screen and (min-width: $screen-small) {
   .emptyList {
     &Icon {
@@ -28,6 +71,22 @@
 
     &Text {
       margin-bottom: 141px;
+    }
+  }
+
+  .jogList {
+    &Item {
+      height: 100%;
+      margin-top: 50px;
+      padding: 0;
+
+      & + .jogListItem {
+        margin-top: 78px;
+      }
+
+      &:after {
+        content: none;
+      }
     }
   }
 }
