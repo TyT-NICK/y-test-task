@@ -1,0 +1,18 @@
+@import 'src/assets/styles/screenBreakponts';
+
+.button {
+  --size: 47px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: var(--size);
+  height: var(--size);
+}
+
+@media screen and (min-width: $screen-small) {
+  .button {
+    --size: 60px;
+    bottom: 40px;
+    right: 40px;
+  }
+}
