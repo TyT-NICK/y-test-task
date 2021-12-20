@@ -3,8 +3,8 @@ export type UuidLogin = {
 }
 
 export type Jog = {
-  id: number
-  userId: string
+  id?: number
+  userId?: string
   distance: number
   time: number
   date: number

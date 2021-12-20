@@ -1,20 +1,18 @@
 import classNames from 'classnames'
-import { FC, FocusEvent, InputHTMLAttributes, memo, TextareaHTMLAttributes, useRef, useState } from 'react'
+import { FC, FocusEvent, forwardRef, InputHTMLAttributes, TextareaHTMLAttributes, useState } from 'react'
 
 import styles from './TextField.module.scss'
 
 type TextFieldProps = (InputHTMLAttributes<HTMLInputElement> & TextareaHTMLAttributes<HTMLTextAreaElement>) & {
   label?: string
-  multiline?: boolean
   isPasswordShown?: boolean
   validateValue?: (value: string) => string
   onFocusLost?: (error: string) => void
 }
 
-const TextField: FC<TextFieldProps> = memo(
+const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
-      multiline,
       className,
       type: inputType,
       isPasswordShown,
@@ -29,10 +27,8 @@ const TextField: FC<TextFieldProps> = memo(
   ) => {
     const [isFocused, setFocused] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
-    const inputRef = useRef(ref)
 
     const classes = classNames(className, styles.textField, {
-      [styles.multiline]: multiline,
       [styles.focused]: isFocused,
       [styles.invalid]: !!errorMessage,
     })
@@ -54,19 +50,6 @@ const TextField: FC<TextFieldProps> = memo(
       onFocusLost && onFocusLost(error)
     }
 
-    const inputElement = multiline ? (
-      <textarea className={styles.input} onFocus={handleFocus} onBlur={handleBlur} ref={inputRef} {...restProps} />
-    ) : (
-      <input
-        className={styles.input}
-        type={type}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        ref={inputRef}
-        {...restProps}
-      />
-    )
-
     return (
       <div className={classes}>
         {label && (
@@ -76,7 +59,15 @@ const TextField: FC<TextFieldProps> = memo(
           </label>
         )}
         <div className={styles.inputWrapper}>
-          {inputElement}
+          <input
+            className={styles.input}
+            type={type}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            ref={ref}
+            {...restProps}
+          />
+
           {children}
         </div>
       </div>

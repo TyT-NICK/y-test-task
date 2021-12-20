@@ -1,0 +1,89 @@
+@import 'src/assets/styles/mixins';
+@import 'src/assets/styles/screenBreakponts';
+
+.form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--col-apple-green);
+  border-radius: 19px;
+  padding: 64px 35px 37px;
+  width: min(503px, 90%);
+  @include flex(column, space-between, stretch);
+}
+
+.input {
+  @include flex(column, space-between, stretch);
+
+  & + .input {
+    margin-top: 25px;
+  }
+
+  label {
+    margin-right: 16px;
+  }
+}
+
+.button {
+  margin-top: 41px;
+}
+
+.close {
+  --size: 18px;
+  top: var(--size);
+  right: var(--size);
+  width: var(--size);
+  height: var(--size);
+  border: none;
+  border-radius: 0;
+  position: absolute;
+  padding: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--col-white-two);
+
+    path {
+      fill: var(--col-white-two) !important;
+    }
+  }
+}
+
+.error {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 65px;
+  background: var(--col-white-two);
+  color: red;
+  text-align: center;
+}
+
+@media screen and (min-width: $screen-small) {
+  .form {
+    padding: 101px 89px 47px;
+    border-radius: 44px;
+
+    .input {
+      @include flex(row, space-between, center);
+
+      & + .input {
+        margin-top: 25px;
+      }
+
+      label {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .button {
+    margin-top: 46px;
+  }
+
+  .close {
+    --size: 27px;
+  }
+}
