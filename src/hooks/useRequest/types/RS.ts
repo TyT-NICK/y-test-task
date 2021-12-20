@@ -11,3 +11,9 @@ export type DataSync = {
     date: number
   }>
 }
+
+export type AddJog = {
+  date: string
+  distance: number
+  time: number
+}

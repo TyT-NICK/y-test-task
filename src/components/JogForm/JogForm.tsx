@@ -11,6 +11,7 @@ type JogFormProps = {
   onSubmit: (data: Form) => void
   onClose: VoidFunction
   isOpen: boolean
+  error?: string
 }
 
 type Form = {
@@ -38,14 +39,14 @@ const validateDate = {
   },
 }
 
-const JogForm: FC<JogFormProps> = ({ onClose, onSubmit, isOpen }) => {
+const JogForm: FC<JogFormProps> = ({ onClose, onSubmit, isOpen, error }) => {
   const {
     register,
     handleSubmit: handleFormSubmit,
     formState: { errors, isValid },
   } = useForm<Form>({ mode: 'onChange' })
 
-  const errorMessage = errors.time?.message || errors.distance?.message || errors.date?.message
+  const errorMessage = error || errors.time?.message || errors.distance?.message || errors.date?.message
 
   return (
     <Modal open={isOpen} onClose={onClose}>

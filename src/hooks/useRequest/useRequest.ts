@@ -80,3 +80,10 @@ export const useLoginRequest = () =>
   })
 
 export const useDataSyncRequest = () => useRequest<RQ.DataSync, RS.DataSync>({ url: Url.DataSync, isAuthNeeded: true })
+
+export const useAddJogRequest = () =>
+  useRequest<RQ.AddJog, RS.AddJog>({
+    url: Url.Jog,
+    method: Method.Post,
+    isAuthNeeded: true,
+  })

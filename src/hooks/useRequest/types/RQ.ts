@@ -3,3 +3,9 @@ export type UuidLogin = {
 }
 
 export type DataSync = void
+
+export type AddJog = {
+  distance: number
+  date: string
+  time: number
+}
