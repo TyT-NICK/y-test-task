@@ -87,6 +87,10 @@
       &:after {
         content: none;
       }
+
+      &:last-child {
+        margin-bottom: 50px;
+      }
     }
   }
 }
