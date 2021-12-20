@@ -1,0 +1,32 @@
+@import 'src/assets/styles/mixins';
+@import 'src/assets/styles/screenBreakponts';
+
+.filter {
+  @include flex(row, center, center);
+  background: var(--col-white);
+  width: 100%;
+  padding: 16px;
+
+  .input {
+    @include flex(row, justify-content, center);
+
+    & + .input {
+      margin-left: 45px;
+    }
+
+    label {
+      margin-bottom: 0;
+      margin-right: 15px;
+      font-size: 13px;
+      color: var(--col-warm-grey);
+    }
+
+    input {
+      width: 72px;
+
+      @media screen and (min-width: $screen-small) {
+        width: 100px;
+      }
+    }
+  }
+}

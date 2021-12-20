@@ -1,9 +1,9 @@
 import classNames from 'classnames'
-import { FC, FocusEvent, forwardRef, InputHTMLAttributes, TextareaHTMLAttributes, useState } from 'react'
+import { FC, FocusEvent, forwardRef, InputHTMLAttributes, useState } from 'react'
 
 import styles from './TextField.module.scss'
 
-type TextFieldProps = (InputHTMLAttributes<HTMLInputElement> & TextareaHTMLAttributes<HTMLTextAreaElement>) & {
+type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string
   isPasswordShown?: boolean
   validateValue?: (value: string) => string
