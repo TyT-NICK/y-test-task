@@ -5,16 +5,22 @@ import { Button } from '../index'
 import { Color } from 'src/constants'
 import { OpenFormContext } from 'src/views/Jogs/Jogs'
 
-const EmptyList: FC = () => {
+type EmptyListProps = {
+  isFiltered?: boolean
+}
+
+const EmptyList: FC<EmptyListProps> = ({ isFiltered }) => {
   const openForm = useContext(OpenFormContext)
 
   return (
     <>
       <Sad className={classes.emptyListIcon} />
       <p className={classes.emptyListText}>Nothing is there</p>
-      <Button color={Color.purple} className={classes.emptyListAddButton} onClick={() => openForm && openForm()}>
-        Create your jog first
-      </Button>
+      {!isFiltered && (
+        <Button color={Color.purple} className={classes.emptyListAddButton} onClick={() => openForm && openForm()}>
+          Create your jog first
+        </Button>
+      )}
     </>
   )
 }

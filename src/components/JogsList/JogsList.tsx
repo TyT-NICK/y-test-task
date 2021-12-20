@@ -3,10 +3,10 @@ import { FC } from 'react'
 import EmptyList from './EmptyList'
 import JogsListItem from './JogsListItem'
 
-type JogsListProps = { items: Jog[] }
+type JogsListProps = { items: Jog[]; isFiltered?: boolean }
 
-const JogsList: FC<JogsListProps> = ({ items }) => {
-  if (!items?.length) return <EmptyList />
+const JogsList: FC<JogsListProps> = ({ items, isFiltered }) => {
+  if (!items?.length) return <EmptyList isFiltered={!!isFiltered} />
 
   return (
     <ul>

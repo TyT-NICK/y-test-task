@@ -81,7 +81,7 @@ const Jogs: FC = () => {
 
           {filtersShown && <JogsFilter onFilerChange={handleFilterUpdate} filter={filter} />}
 
-          {!pending && <JogsList items={items} />}
+          {!pending && <JogsList items={items} isFiltered={!!(filter.min || filter.max)} />}
 
           <OpenJogFormButton />
         </main>
