@@ -1,3 +1,3 @@
-const dateFormatString = 'dd.MM.yyyy'
+const dateFormatString = 'dd/MM/yyyy'
 
 export default dateFormatString
