@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 import { AppDispatch } from 'src/store'
 import { useDispatch } from 'react-redux'
-import { authActions } from 'src/reducers'
+import { authActions, jogsActions } from 'src/reducers'
+import { Jog } from 'src/constants/types'
 
 /* Auth Dispatchers */
 
@@ -15,4 +16,12 @@ export const useLogoutDispatch = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(() => dispatch(authActions.logout()), [dispatch])
+}
+
+/* Jogs Dispatchers */
+
+export const useSetJogsDispatch = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback((jogs: Jog[]) => dispatch(jogsActions.setJogs(jogs)), [dispatch])
 }
