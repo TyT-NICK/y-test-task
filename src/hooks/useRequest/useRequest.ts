@@ -54,6 +54,11 @@ const useRequest = <RQ, RS>({
 
           case Method.Delete:
             response = await HTTPAgent.delete(url, config)
+            break
+
+          case Method.Put:
+            response = await HTTPAgent.put(url, params, config)
+            break
         }
       } catch (e) {
         throw e
@@ -85,5 +90,12 @@ export const useAddJogRequest = () =>
   useRequest<RQ.AddJog, RS.AddJog>({
     url: Url.Jog,
     method: Method.Post,
+    isAuthNeeded: true,
+  })
+
+export const useUpdateJogRequest = () =>
+  useRequest<RQ.UpdateJog, RS.UpdateJog>({
+    url: Url.Jog,
+    method: Method.Put,
     isAuthNeeded: true,
   })

@@ -17,3 +17,5 @@ export type AddJog = {
   distance: number
   time: number
 }
+
+export type UpdateJog = void

@@ -1,20 +1,18 @@
 import { createContext, FC, useCallback, useEffect, useState } from 'react'
 import { Header, JogForm, JogsFilter, JogsList, Modal, OpenJogFormButton, ToggleFilterButton } from 'src/components'
-import { useAppSelector, useToggle } from 'src/hooks'
+import { useAppSelector, useDataSync, useSubmitJog, useToggle } from 'src/hooks'
 import RequireAuth from 'src/router/ReqireAuth'
-import { useAddJogRequest, useDataSyncRequest } from 'src/hooks/useRequest'
 import { Jog } from 'src/constants/types'
-import { renameKeysInArray } from 'src/utils'
 import classes from './Jogs.module.scss'
-import { useSetJogsDispatch } from 'src/hooks/useDispatch'
-import { JogsFilterType } from '../../components/JogsFilter/JogsFilter'
-import { JogFormType } from '../../components/JogForm/JogForm'
+import { JogsFilterType } from 'src/components/JogsFilter/JogsFilter'
 
 export const OpenFormContext = createContext<VoidFunction | null>(null)
 
 const filterJogs = (jogs: Jog[], { min, max }: JogsFilterType) =>
   jogs.filter(({ date }) => {
     const jogDate = new Date(date * 1000) //epoch format
+
+    console.log({ min, jogDate, max })
 
     if (min && jogDate < min) return false
     return !(max && jogDate > max)
@@ -29,39 +27,24 @@ const Jogs: FC = () => {
   const [currentlyEditedJog, setCurrentlyEditedJog] = useState<Jog | null>(null)
   const [filter, setFilter] = useState<JogsFilterType>({ min: null, max: null })
 
-  const setJogs = useSetJogsDispatch()
-
   const [filtersShown, toggleFiltersShown] = useToggle(false)
-  const [getItems, pending] = useDataSyncRequest()
-  const [addJog] = useAddJogRequest()
 
   const handleFiltersToggle = useCallback(() => toggleFiltersShown(), [toggleFiltersShown])
 
-  const updateItems = useCallback(() => {
-    getItems()
-      .then(({ jogs: rawJogs }) => {
-        const jogs = renameKeysInArray<Jog[]>(rawJogs).sort((a, b) => b.date - a.date)
+  const [updateItems, pending] = useDataSync()
 
-        setJogs(jogs)
-      })
-      .catch((e) => console.error(e))
-  }, [getItems, setJogs])
+  const handleSuccess = useCallback(() => {
+    setJogFormOpen(false)
+    updateItems()
+  }, [updateItems])
+
+  const handleError = useCallback((e: Error) => {
+    setFormError(e.message)
+  }, [])
+
+  const [submitJog] = useSubmitJog({ onSuccess: handleSuccess, onError: handleError })
 
   const handleFilterUpdate = useCallback((filter: JogsFilterType) => setFilter(filter), [])
-
-  const handleFormSubmit = useCallback(
-    (data: JogFormType) => {
-      addJog(data)
-        .then((_) => {
-          setJogFormOpen(false)
-          updateItems()
-        })
-        .catch((e) => {
-          setFormError(e.message)
-        })
-    },
-    [addJog, updateItems]
-  )
 
   const handleJogFormClose = useCallback(() => {
     setJogFormOpen(false)
@@ -69,8 +52,8 @@ const Jogs: FC = () => {
   }, [])
 
   const handleJogItemClick = useCallback((jog: Jog) => {
-    setCurrentlyEditedJog(jog)
     setJogFormOpen(true)
+    setCurrentlyEditedJog(jog)
   }, [])
 
   useEffect(() => {
@@ -83,6 +66,7 @@ const Jogs: FC = () => {
 
   return (
     <RequireAuth>
+      {/* It's better to use props to pass setJogFormOpen, but it is the only place i've found to apply useContext hook */}
       <OpenFormContext.Provider value={() => setJogFormOpen(true)}>
         <Header>
           <ToggleFilterButton isActive={filtersShown} toggle={handleFiltersToggle} />
@@ -101,12 +85,7 @@ const Jogs: FC = () => {
         </main>
 
         <Modal open={isJogFormOpen} onClose={handleJogFormClose}>
-          <JogForm
-            error={formError}
-            onSubmit={handleFormSubmit}
-            onClose={handleJogFormClose}
-            jog={currentlyEditedJog}
-          />
+          <JogForm error={formError} onSubmit={submitJog} onClose={handleJogFormClose} jog={currentlyEditedJog} />
         </Modal>
       </OpenFormContext.Provider>
     </RequireAuth>

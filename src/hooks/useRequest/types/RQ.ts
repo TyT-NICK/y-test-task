@@ -9,3 +9,8 @@ export type AddJog = {
   date: string
   time: number
 }
+
+export type UpdateJog = AddJog & {
+  jog_id: number
+  user_id: string
+}
