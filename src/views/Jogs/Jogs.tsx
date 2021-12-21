@@ -1,5 +1,5 @@
 import { createContext, FC, useCallback, useEffect, useState } from 'react'
-import { Header, JogForm, JogsFilter, JogsList, OpenJogFormButton, ToggleFilterButton } from 'src/components'
+import { Header, JogForm, JogsFilter, JogsList, Modal, OpenJogFormButton, ToggleFilterButton } from 'src/components'
 import { useAppSelector, useToggle } from 'src/hooks'
 import RequireAuth from 'src/router/ReqireAuth'
 import { useAddJogRequest, useDataSyncRequest } from 'src/hooks/useRequest'
@@ -61,6 +61,8 @@ const Jogs: FC = () => {
     [addJog, updateItems]
   )
 
+  const handleJogFormClose = useCallback(() => setJogFormOpen(false), [])
+
   useEffect(() => {
     updateItems()
   }, [updateItems])
@@ -86,12 +88,9 @@ const Jogs: FC = () => {
           <OpenJogFormButton />
         </main>
 
-        <JogForm
-          error={formError}
-          onSubmit={handleFormSubmit}
-          onClose={() => setJogFormOpen(false)}
-          isOpen={isJogFormOpen}
-        />
+        <Modal open={isJogFormOpen} onClose={handleJogFormClose}>
+          <JogForm error={formError} onSubmit={handleFormSubmit} onClose={handleJogFormClose} />
+        </Modal>
       </OpenFormContext.Provider>
     </RequireAuth>
   )
