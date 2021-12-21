@@ -26,14 +26,14 @@ const Header: FC = ({ children }) => {
 
   const headerClass = classNames(classes.header, { [classes.inverted]: isMenuOpened })
   const navClass = classNames(classes.nav, { [classes.shown]: isMenuOpened })
-  const authOnly = classNames(classes.authOnly, { [classes.hidden]: !token })
+  const forAuthenticatedOnly = classNames(classes.authOnly, { [classes.hidden]: !token })
   const childrenClass = classNames(classes.children)
 
   return (
     <header className={headerClass}>
       <Logo className={classes.logo} />
 
-      <div className={authOnly}>
+      <div className={forAuthenticatedOnly}>
         {children && !isMenuOpened && <div className={childrenClass}>{children}</div>}
 
         <NavList className={navClass} items={navLinks} />
