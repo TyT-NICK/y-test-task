@@ -1,22 +1,27 @@
-import { FC } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, TextField } from '../index'
 import classes from './JogForm.module.scss'
 import { Color } from 'src/constants'
 import { ReactComponent as Cross } from 'src/assets/imgs/cancel.svg'
-import { isValid, parse } from 'date-fns'
+import { format, isValid, parse } from 'date-fns'
 import { enGB } from 'date-fns/locale'
+import { Jog } from 'src/constants/types'
+import dateFormatString from 'src/constants/dateFormatString'
 
 type JogFormProps = {
   onSubmit: (data: JogFormType) => void
   onClose: VoidFunction
   error?: string
+  jog?: Jog | null
 }
 
 export type JogFormType = {
   distance: number
   time: number
   date: string
+  userId?: string
+  id?: number
 }
 
 const validateDistanceTime = {
@@ -38,17 +43,29 @@ const validateDate = {
   },
 }
 
-const JogForm: FC<JogFormProps> = ({ onClose, onSubmit, error }) => {
+const JogForm: FC<JogFormProps> = ({ onClose, onSubmit, error, jog }) => {
   const {
     register,
     handleSubmit: handleFormSubmit,
     formState: { errors, isValid },
+    setValue,
   } = useForm<JogFormType>({ mode: 'onChange' })
 
   const errorMessage = error || errors.time?.message || errors.distance?.message || errors.date?.message
 
+  const handleSubmit = useCallback((data: JogFormType) => onSubmit({ ...(jog || {}), ...data }), [jog, onSubmit])
+
+  useEffect(() => {
+    if (!jog) return
+
+    const { distance, date, time } = jog
+    setValue('distance', distance)
+    setValue('date', format(date * 1000, dateFormatString))
+    setValue('time', time)
+  }, [jog, setValue])
+
   return (
-    <form onSubmit={handleFormSubmit(onSubmit)} className={classes.form}>
+    <form onSubmit={handleFormSubmit(handleSubmit)} className={classes.form}>
       <TextField {...register('distance', validateDistanceTime)} className={classes.input} label={'Distance'} />
       <TextField {...register('time', validateDistanceTime)} className={classes.input} label={'Time'} />
       <TextField {...register('date', validateDate)} className={classes.input} label={'Date'} />

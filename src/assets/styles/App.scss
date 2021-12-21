@@ -31,5 +31,5 @@ li {
 #root {
   min-height: 100vh;
   overflow: auto;
-  @include flex(column, start, stretch);
+  @include flex(column, flex-start, stretch);
 }

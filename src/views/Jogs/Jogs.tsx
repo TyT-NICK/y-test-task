@@ -8,6 +8,7 @@ import { renameKeysInArray } from 'src/utils'
 import classes from './Jogs.module.scss'
 import { useSetJogsDispatch } from 'src/hooks/useDispatch'
 import { JogsFilterType } from '../../components/JogsFilter/JogsFilter'
+import { JogFormType } from '../../components/JogForm/JogForm'
 
 export const OpenFormContext = createContext<VoidFunction | null>(null)
 
@@ -25,6 +26,7 @@ const Jogs: FC = () => {
   const [items, setItems] = useState<Jog[]>([])
   const [isJogFormOpen, setJogFormOpen] = useState(false)
   const [formError, setFormError] = useState('')
+  const [currentlyEditedJog, setCurrentlyEditedJog] = useState<Jog | null>(null)
   const [filter, setFilter] = useState<JogsFilterType>({ min: null, max: null })
 
   const setJogs = useSetJogsDispatch()
@@ -48,7 +50,7 @@ const Jogs: FC = () => {
   const handleFilterUpdate = useCallback((filter: JogsFilterType) => setFilter(filter), [])
 
   const handleFormSubmit = useCallback(
-    (data: { distance: number; time: number; date: string }) => {
+    (data: JogFormType) => {
       addJog(data)
         .then((_) => {
           setJogFormOpen(false)
@@ -61,7 +63,15 @@ const Jogs: FC = () => {
     [addJog, updateItems]
   )
 
-  const handleJogFormClose = useCallback(() => setJogFormOpen(false), [])
+  const handleJogFormClose = useCallback(() => {
+    setJogFormOpen(false)
+    setCurrentlyEditedJog(null)
+  }, [])
+
+  const handleJogItemClick = useCallback((jog: Jog) => {
+    setCurrentlyEditedJog(jog)
+    setJogFormOpen(true)
+  }, [])
 
   useEffect(() => {
     updateItems()
@@ -83,13 +93,20 @@ const Jogs: FC = () => {
 
           {filtersShown && <JogsFilter onFilerChange={handleFilterUpdate} filter={filter} />}
 
-          {!pending && <JogsList items={items} isFiltered={!!(filter.min || filter.max)} />}
+          {!pending && (
+            <JogsList items={items} isFiltered={!!(filter.min || filter.max)} onItemClick={handleJogItemClick} />
+          )}
 
           <OpenJogFormButton />
         </main>
 
         <Modal open={isJogFormOpen} onClose={handleJogFormClose}>
-          <JogForm error={formError} onSubmit={handleFormSubmit} onClose={handleJogFormClose} />
+          <JogForm
+            error={formError}
+            onSubmit={handleFormSubmit}
+            onClose={handleJogFormClose}
+            jog={currentlyEditedJog}
+          />
         </Modal>
       </OpenFormContext.Provider>
     </RequireAuth>
