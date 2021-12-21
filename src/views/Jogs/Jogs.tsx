@@ -5,18 +5,22 @@ import RequireAuth from 'src/router/ReqireAuth'
 import { Jog } from 'src/constants/types'
 import classes from './Jogs.module.scss'
 import { JogsFilterType } from 'src/components/JogsFilter/JogsFilter'
+import { addDays } from 'date-fns'
 
 export const OpenFormContext = createContext<VoidFunction | null>(null)
 
-const filterJogs = (jogs: Jog[], { min, max }: JogsFilterType) =>
-  jogs.filter(({ date }) => {
-    const jogDate = new Date(date * 1000) //epoch format
+const filterJogs = (jogs: Jog[], { min, max: rawMax }: JogsFilterType) => {
+  // This allows to include date from 'Date to'. Without it they're ignored
+  // example: 'Date to' is set to '22/12/2021', but Jog has date '22/12/2021 11:45', which is greater then 'Date to'
+  const max = rawMax && addDays(rawMax, 1)
 
-    console.log({ min, jogDate, max })
+  return jogs.filter(({ date }) => {
+    const jogDate = new Date(date * 1000) // epoch format
 
     if (min && jogDate < min) return false
     return !(max && jogDate > max)
   })
+}
 
 const Jogs: FC = () => {
   const jogs = useAppSelector((state) => state.jogs)
